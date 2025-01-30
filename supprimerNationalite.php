@@ -6,26 +6,14 @@ $num=$_GET['num'];
     $req->bindParam(':num', $num);
     $nb=$req->execute();
 
-echo "<div class='container mt-5'>";
-echo '<div class="row">
-    <div class="col mt-3">';
-
 if($nb == 1){
-    echo'<div class="alert alert-dark" role="alert">
-  La nationalite a bien ete suprimée
-</div>';
+  $_SESSION['message'] = ["success" => "La nationalite a bien ete suprimée"];
+
 }else{
-    echo'<div class="alert alert-danger" role="alert">
-  La nationalite n\'a pas ete suprimée
-</div>';
+  $_SESSION['message'] = ["danger" => "La nationalite n'a pas ete suprimée"];
 
 } 
+header('location: listeNation.php');
+exit();
 
 ?>
-   </div>
-</div>
-<a href="listeNation.php" class='btn btn-primary'>Revenir a la liste des nationalité </a>
-
-</div>
-
-<?php include "footer.php";?>
