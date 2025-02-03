@@ -8,7 +8,12 @@ if($action == "Modifier"){
     $req->bindParam(':num', $num);
     $req->execute();
     $laNationalite=$req->fetch();
+
 }
+$reqContinent=$monPdo->prepare("select * from continent");
+$reqContinent->setFetchMode(PDO::FETCH_OBJ);
+$reqContinent->execute();
+$lesContinents=$reqContinent->fetchAll();
 ?>
 
 <div class="container mt-5">
@@ -17,6 +22,17 @@ if($action == "Modifier"){
             <div class="classformgroup">
                 <label for="libelle">Libelle</label>
                 <input type="text"class='form-control' id='libelle' placeholder='saisir le libelle' name='libelle' value="<?php if($action == "Modifier"){echo $laNationalite -> libelle;}?>">
+            </div>
+            <div class="classformgroup">
+                <label for="continent">Libelle</label>
+                <select name="continent" class='form-control'>
+                    <?php
+                    foreach($lesContinents as $Continents){
+                        $selection=$Continents->num==$laNationalite->numContinent?"selected":"";
+                        echo "<option value='$continent->num'$selection >$continent->libelle</option>";
+                    }
+                    ?>
+                </select>         
             </div>
             <input type="hidden" id="num" name="num" value="<?php if($action == "Modifier"){ echo $laNationalite->num;}?>">
             <div class="row mt-3">
